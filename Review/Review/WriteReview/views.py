@@ -2,6 +2,7 @@
 
 from django.shortcuts import render
 from . import forms
+from . import models
 #from .models import 
 # Create your views here.
 """
@@ -22,5 +23,5 @@ def RevDone(request):
             Title=form.cleaned_data['Title']
             Review=form.cleaned_data['Review']
             Tags=form.cleaned_data['Tags']
-            print(Title)
+            models.Reviews.objects.create(Title=Title,Body=Review,Tag=Tags)
     return render(request,"WriteReview/index.html",{})
