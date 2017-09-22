@@ -1,5 +1,7 @@
 <!doctype html>
+{% load crispy_forms_tags %}
 <html>
+
     <head><title>Write a new Review</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -18,11 +20,27 @@
     </head>
     <body>
         <div class="jumbotron text-center">
-            <h1>Write a Review!!</h1>
+            <h1>Write a Review!</h1>
             <p>Write a  Review about anything. Literally, anything. </p>
         </div>
         <center>
             <h2>Start Today</h2>
+            <div class="container">
+                    <div class="row">
+                        <div class = "col-sm-8 col-sm-offset-2">	
+                            <form class="form-horizontal" enctype="mltipart/form-data" method="POST" action={% url 'RevForm' %} >
+                                {% csrf_token %}
+                                    <span>{{form|crispy}}</span>
+                                {{form.errors}}
+                                <center>
+                                    <button type="submit" value="submit">SUBMIT!</button>
+                                </center>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                    
         </center>
     </body>
 </html>
