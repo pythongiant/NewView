@@ -27,9 +27,15 @@ def start(request):
         for y in i:
             art_tags_all_refined.append(y)
     """
+    recommend=0
+    
+    for i in range(len(article)):
+        tag=art_tags_all[i]
+        print(simscore(tag,art_tags_all[1]))
+        recommend=i
+        recommendation=article.filter(pk=13)
+        print(recommendation)
 
-
-    print(art_tags_all[1])
     context={"form":form,"article":article}
     return render(request,"WriteReview/index.html",context)
    
@@ -42,7 +48,6 @@ def RevDone(request):
             Title=form.cleaned_data['Title']
             Review=form.cleaned_data['Review']
             Tags=form.cleaned_data['Tags']
-            tag.append(Tags)       
             models.Reviews.objects.create(Title=Title,Body=Review,Tag=Tags)
     return redirect("/")
 
@@ -53,4 +58,4 @@ def simscore(tag,test):
             if i == y:
                 score+=1
                 
-    return score            
+    return (score)
