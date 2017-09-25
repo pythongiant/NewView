@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 <html>
 
-    <head><title>Write a new Review</title>
+    <head><title>Write a new Article</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,8 +20,8 @@
     </head>
     <body>
         <div class="jumbotron text-center">
-            <h1>Write a Review!</h1>
-            <p>Write a  Review about anything. Literally, anything. </p>
+            <h1>Write a article!</h1>
+            <p>Write an article about anything. Literally, anything. </p>
         </div>
         <center>
             <h2>Start Today</h2>
@@ -39,8 +39,12 @@
                         </div>
                     </div>
                 </div>
-                
-                    
+                <h2>Read these New Articles</h2>
+                {% for i in article %}
+                    <h4>{{i}}</h4>
+                    <p>{{i.Body}}</p>
+                {% endfor %}              
+                {{a}}     
         </center>
     </body>
 </html>
