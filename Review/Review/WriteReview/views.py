@@ -1,6 +1,6 @@
 #!usr/bin/python3
 
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from . import forms
 from . import models
 
@@ -29,12 +29,12 @@ def start(request):
     """
     recommend=0
     
-    for i in range(len(article)):
-        tag=art_tags_all[i]
-        print(simscore(tag,art_tags_all[1]))
-        recommend=i
-        recommendation=article.filter(pk=13)
-        print(recommendation)
+    #for i in range(len(article)):
+        #tag=art_tags_all[i]
+        #print(simscore(tag,art_tags_all[1]))
+       # recommend=i
+        #recommendation=article.filter(pk=13)
+       # print(recommendation)
 
     context={"form":form,"article":article}
     return render(request,"WriteReview/index.html",context)
@@ -59,3 +59,11 @@ def simscore(tag,test):
                 score+=1
                 
     return (score)
+def ReviewDetail(request,rev_id):
+    print(rev_id)
+    article=get_object_or_404(models.Reviews,pk=rev_id)
+    print(article)
+    context={"article":article}
+    return render(request,"WriteReview/MainPage.html",context)
+
+

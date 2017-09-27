@@ -11,16 +11,25 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
    
     <style>
+        body,html{
+            width:100%;
+            height:100%;
+        }
     .jumbotron{
-        background-color: #FF0800 !important;
+        background-color: #FF0033 !important;
         color:white;
+        
+        height:50%
+        
+
     }
     
     </style>
     </head>
     <body>
         <div class="jumbotron text-center">
-            <h1>Write a article!</h1>
+            <h1>Welcome To NewView</h1>
+            <h3>Write a article!</h3>
             <p>Write an article about anything. Literally, anything. </p>
         </div>
         <center>
@@ -41,10 +50,8 @@
                 </div>
                 <h2>Read these New Articles</h2>
                 {% for i in article %}
-                    <h4>{{i}}</h4>
-                    <p>{{i.Body}}</p>
+                    <strong><h4><a href="/{{i.id}}">{{i}}</a></h4></strong>
                 {% endfor %}              
-                {{a}}     
         </center>
     </body>
 </html>
