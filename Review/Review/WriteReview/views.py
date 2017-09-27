@@ -38,41 +38,40 @@ def simscore(tag,test):
                 score+=1
                 
     return (score)
-def recommend():
+def recommend(pk):
     global recommendation
     article=models.Reviews.objects.all()
     art_tags=[]
     art_tags_all=[]
-    art_tags_all_refined=[]
+   
     for i in article:
         art_tags.append(i.Tag)
     for i in art_tags:
         string=i.split(',')
         art_tags_all.append(string)
-    """
-    for i in art_tags_all:
-        for y in i:
-            art_tags_all_refined.append(y)
-    """
+
     recommend=0
     print(art_tags_all)
     for i in range(len(article)):
         tag=art_tags_all[i]
-        sim=simscore(tag,art_tags_all[0])
+        sim=simscore(tag,art_tags_all[int(pk)-1])
         if sim>0:
-            recommend=i
-            recommendation.append(recommend)
+            recommend=i+1
+            recommendation.append(get_object_or_404(models.Reviews,pk=recommend))
         
 
 
 
 def ReviewDetail(request,rev_id):
+    global recommendation
     print(rev_id)
     article=get_object_or_404(models.Reviews,pk=rev_id)
     print(article)
-    context={"article":article}
-    recommend()
-    print(recommendation)
+    recommend(rev_id)
+    print(str(recommendation)+"  before")
+    context={"article":article,"recommendations":recommendation}
+    recommendation=[]
+
     return render(request,"WriteReview/MainPage.html",context)
     
 
