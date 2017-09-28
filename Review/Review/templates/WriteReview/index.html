@@ -34,7 +34,11 @@
             <span><h1>NewView</h1></span>
             <h3>Write a article!</h3>
             <p>Write an article about anything. Literally, anything. </p>
+            {% if user.is_authenticated %}
             <a style="color:white" href="/art"><button type="button" class="btn btn-primary">Write an article</button></a>
+            {% else %}
+            <p><a href="/login" style="color:white"><button class="btn btn-primary">Login</button></a>&nbsp<a href="/signup" style="color:white"><button class="btn btn-warning">Sign Up</button></a></p>
+            {% endif %}
         </div>
         <center>
             <h2>Start Today</h2>

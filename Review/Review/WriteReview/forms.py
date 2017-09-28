@@ -6,3 +6,13 @@ class Review(forms.Form):
     Title=forms.CharField(label="Give a Title",max_length=200,initial="add your title")
     Review=forms.CharField(label="Your Article",max_length=100000,initial="Type your Review",widget=forms.Textarea)
     Tags=forms.CharField(label="add a tag. (Seperate with a ',') - eg. movie,event",max_length=5000,initial=" ")
+class Authenticate(forms.Form):
+    
+    Username=forms.CharField(label="Username:",initial=" ")
+    Password=forms.CharField(widget = forms.PasswordInput(),initial="") 
+
+class Add(forms.Form):
+    Username=forms.CharField(label="Username:",initial=" ")
+    Password=forms.CharField(widget = forms.PasswordInput(),initial="")
+    
+    Email=forms.EmailField(label="Email Id:",initial="")

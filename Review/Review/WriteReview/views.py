@@ -3,6 +3,8 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from . import forms
 from . import models
+from django.contrib.auth.models import User #Import the User module
+from django.contrib.auth import authenticate,login,logout#import some more stuff
 
 #from .models import 
 # Create your views here.
@@ -79,3 +81,35 @@ def form(request):
     form = forms.Review()    
     context={"form":form}
     return render(request,"WriteReview/ArticleForm.html",context)
+def signupForm(request):
+    form=forms.Add()
+    return render(request, 'WriteReviews/add.html', {'signup': form})
+def signup(request):
+    if request.method == 'POST':
+        form = forms.Add(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['Username']
+            password = form.cleaned_data['Password']
+            email=form.cleaned_data['Email']
+            
+            user = User.objects.create_user(username, email, password)
+    user=authenticate(username=username,password=password)
+    login(request,user)          
+    return redirect("/")              
+  
+def loginForm(request):
+    form=forms.Authenticate()
+    return render(request, 'WriteReview/login.html', {'Login': form})      
+    
+def loginAction(request):
+    if request.method == 'POST':
+        form = forms.Authenticate(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['Username']
+            password = form.cleaned_data['Password']
+            user=authenticate(username=username,password=password)        
+            if user is not None:
+                login(request,user)
+                return redirect('/')
+            else:
+                return render(request,"WriteReview/invalid.html",{})
