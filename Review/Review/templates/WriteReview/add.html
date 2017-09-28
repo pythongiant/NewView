@@ -42,7 +42,7 @@
         <form action={% url 'add' %} method="POST">
             {% csrf_token %}
             <div style="padding-bottom: 10px;">
-                {% if signup.errors %} The errors are: <span>{{ Login.errors }}</span> {% endif %}
+                {% if signup.errors %} The errors are: <span>{{ signup.errors }}</span> {% endif %}
                 <span>{{ signup|crispy }}</span>
             </div>
             <br/>

@@ -1,0 +1,54 @@
+<!doctype html>
+{% load crispy_forms_tags %}
+<html>
+
+    <head><title>Write a new Article</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+   
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Anton|Lobster|Raleway|Libre+Barcode+39+Text');
+        body,html{
+            width:100%;
+            height:100%;
+        }
+    .jumbotron{
+        background-color: #FF0033 !important;
+        color:white;
+        height:60%
+    }
+    
+    #banner{
+        font-family: 'Libre Barcode 39 Text', cursive !important;
+    }
+    
+    </style>
+    </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1>Welcome To </h1>
+            <br>
+            <span id="banner"><h1>NewView</h1></span>
+            <h3>Write a article!</h3>
+            <p>Write an article about anything. Literally, anything. </p>
+            </div>
+            <center>
+                <h2>Login.</h2>
+                <p>you know the drill</p>
+                
+                    <form class="form-horizontal" enctype="mltipart/form-data" method="POST" action={% url 'login' %} >
+                        {% csrf_token %}
+                        {{Login|crispy}}
+                        {% if Login.errors %} The errors are: <span>{{ Login.errors }}</span> {% endif %}
+                        <br>
+                        <button class="btn btn-primary" type="submit" value="submit">SUBMIT!</button>
+                        </form>
+                        
+
+            </center>
+            </body>
+            </html>
