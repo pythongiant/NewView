@@ -12,10 +12,10 @@ password:pass1234
 """
 recommendation=[]
 def start(request):
-    form = forms.Review()    
+    
     article=models.Reviews.objects.all()
     
-    context={"form":form,"article":article}
+    context={"article":article}
     return render(request,"WriteReview/index.html",context)
    
 def RevDone(request):
@@ -75,3 +75,7 @@ def ReviewDetail(request,rev_id):
     return render(request,"WriteReview/MainPage.html",context)
     
 
+def form(request):
+    form = forms.Review()    
+    context={"form":form}
+    return render(request,"WriteReview/ArticleForm.html",context)
