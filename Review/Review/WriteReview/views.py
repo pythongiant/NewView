@@ -15,8 +15,8 @@ password:pass1234
 recommendation=[]
 def start(request):
     
-    article=models.Reviews.objects.all()
-    
+    article=[i for i in models.Reviews.objects.all()]
+    article.reverse()
     context={"article":article}
     return render(request,"WriteReview/index.html",context)
    
@@ -54,6 +54,7 @@ def recommend(pk):
 
     recommend=0
     print(art_tags_all)
+    
     for i in range(len(article)):
         tag=art_tags_all[i]
         sim=simscore(tag,art_tags_all[int(pk)-1])
@@ -113,3 +114,6 @@ def loginAction(request):
                 return redirect('/')
             else:
                 return render(request,"WriteReview/invalid.html",{})
+def signout(request):
+    logout(request)
+    return redirect('/')            
