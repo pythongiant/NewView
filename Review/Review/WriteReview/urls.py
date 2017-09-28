@@ -12,4 +12,6 @@ urlpatterns=[
     url(r'art',views.form,name="articleForm"),
     url(r'login',views.loginForm,name="login"),
     url(r'signup',views.signupForm,name="signup"),
+    url(r'sign',views.signup,name="add"),
+    
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
