@@ -83,7 +83,7 @@ def form(request):
     return render(request,"WriteReview/ArticleForm.html",context)
 def signupForm(request):
     form=forms.Add()
-    return render(request, 'WriteReviews/add.html', {'signup': form})
+    return render(request, 'WriteReview/add.html', {'signup': form})
 def signup(request):
     if request.method == 'POST':
         form = forms.Add(request.POST)
