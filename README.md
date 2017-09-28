@@ -1,2 +1,3 @@
 # NewView
-Django website which enables users to Write Reviews. [development on going]
+Django website which enables users to Write articles and recommends articles. [development on going]
+
