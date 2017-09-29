@@ -29,7 +29,7 @@ def RevDone(request):
             Title=form.cleaned_data['Title']
             Review=form.cleaned_data['Review']
             Tags=form.cleaned_data['Tags']
-            models.Reviews.objects.create(Title=Title,Body=Review,Tag=Tags)
+            models.Reviews.objects.create(Title=Title,Body=Review,Tag=Tags,author=request.user.username)
     return redirect("/")
 
 def simscore(tag,test):
@@ -61,7 +61,8 @@ def recommend(pk):
         if sim>0:
             recommend=i+1
             recommendation.append(get_object_or_404(models.Reviews,pk=recommend))
-        
+    
+    recommendation.reverse()
 
 
 
@@ -72,6 +73,10 @@ def ReviewDetail(request,rev_id):
     print(article)
     recommend(rev_id)
     print(str(recommendation)+"  before")
+    for i in recommendation:
+        if i == article:
+           recommendation.remove(i) 
+            
     context={"article":article,"recommendations":recommendation}
     recommendation=[]
 

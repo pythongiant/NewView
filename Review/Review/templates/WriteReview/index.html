@@ -33,7 +33,7 @@
             <br>
             <span><h1>NewView</h1></span>
             <h3>Write a article!</h3>
-            <p>Write an article about anything. Literally, anything. </p>
+            <p>Write an article about anything,{{ request.user.username }} Literally anything. </p>
             {% if user.is_authenticated %}
             <p><a style="color:white" href="/art"><button type="button" class="btn btn-primary">Write an article</button></a>
                <a style="color:white" href={% url 'asignout' %}><button type="button" class="btn btn-warning">Sign Out</button></a>
