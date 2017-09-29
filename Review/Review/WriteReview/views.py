@@ -5,6 +5,7 @@ from . import forms
 from . import models
 from django.contrib.auth.models import User #Import the User module
 from django.contrib.auth import authenticate,login,logout#import some more stuff
+from django.db import IntegrityError
 
 #from .models import 
 # Create your views here.
@@ -87,27 +88,36 @@ def form(request):
     form = forms.Review()    
     context={"form":form}
     return render(request,"WriteReview/ArticleForm.html",context)
+
 def signupForm(request):
     form=forms.Add()
     return render(request, 'WriteReview/add.html', {'signup': form})
+
 def signup(request):
+    form=forms.Add()
     if request.method == 'POST':
         form = forms.Add(request.POST)
         if form.is_valid():
             username = form.cleaned_data['Username']
             password = form.cleaned_data['Password']
             email=form.cleaned_data['Email']
-            
-            user = User.objects.create_user(username, email, password)
-            user=authenticate(username=username,password=password)
-            login(request,user)          
-    return redirect("/")              
+            try:
+                user = User.objects.create_user(username, email, password)
+                user=authenticate(username=username,password=password)
+                login(request,user)          
+                return redirect("/")              
+            except IntegrityError:
+                
+                error="Try another Username"
+                return render(request,"WriteReview/add.html",{"error":error,"form":form})        
+    
   
 def loginForm(request):
     form=forms.Authenticate()
     return render(request, 'WriteReview/login.html', {'Login': form})      
     
 def loginAction(request):
+    form=forms.Authenticate()
     if request.method == 'POST':
         form = forms.Authenticate(request.POST)
         if form.is_valid():
@@ -118,7 +128,21 @@ def loginAction(request):
                 login(request,user)
                 return redirect('/')
             else:
-                return render(request,"WriteReview/invalid.html",{})
+                error="Wrong Username or Password"
+                return render(request,"WriteReview/login.html",{"Login":form,"error":error})
+
 def signout(request):
     logout(request)
-    return redirect('/')            
+    return redirect('/')         
+
+def authour(request,name):
+    ArticleObject=models.Reviews.objects.all()
+    articles=[]
+    for article in ArticleObject:
+        author_name=article.author
+        if author_name == name:
+            articles.append(article)
+    context={"article":articles,"name":name}
+    return render(request,"WriteReview/author.html",context)
+def subs(request):
+    pass

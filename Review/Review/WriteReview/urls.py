@@ -14,5 +14,8 @@ urlpatterns=[
     url(r'signup$',views.signupForm,name="signup"),
     url(r'sign$',views.signup,name="add"),
     url(r'loginForm$',views.loginAction,name="login"),
-    url(r'signout$',views.signout,name="asignout")
+    url(r'signout$',views.signout,name="asignout"),
+    url(r'authors/(?P<name>[\w-]+)/$',views.authour,name="author")
+    url(r'authors/(?P<name>[\w-]+)/follow/$',views.subs,name="author")
+    
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

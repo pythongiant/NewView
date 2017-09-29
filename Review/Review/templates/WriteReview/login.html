@@ -39,7 +39,7 @@
             <center>
                 <h2>Login.</h2>
                 <p>you know the drill</p>
-                
+                <p style="color:red;">{{error}}</p>
                     <form class="form-horizontal" enctype="mltipart/form-data" method="POST" action={% url 'login' %} >
                         {% csrf_token %}
                         {{Login|crispy}}

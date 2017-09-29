@@ -38,7 +38,7 @@
             </div>
         <center>
             <h1>Fill the Form below to Sign Up </h1>
-
+<h2>{{error}}</h2>
         <form action={% url 'add' %} method="POST">
             {% csrf_token %}
             <div style="padding-bottom: 10px;">
@@ -46,7 +46,9 @@
                 <span>{{ signup|crispy }}</span>
             </div>
             <br/>
+            
             <button class="btn btn-primary" type="submit" value="submit">SUBMIT!</button>        </form>
+            
         Already have a account? <a href="/login/">login here</a>
     </center>
 </body>

@@ -38,8 +38,8 @@
 </div>   
 <center>
         <h2 id="title">{{article.Title}}</h2>
+        <a href="/authors/{{article.author}}"><p>By: {{article.author}}</p></a>
         
-        {{ context_var|safe }}
         {% autoescape off %}
         <p style="margin-left: 10px;">{{article.Body}}</p>
         {% endautoescape %}
