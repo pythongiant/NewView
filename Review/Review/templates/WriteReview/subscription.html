@@ -2,12 +2,11 @@
 
 <html>
 
-    <head><title>{{name}}|NewView</title>
+    <head><title>Write a new Article</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#ffcd94" />
-    
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
    
@@ -25,25 +24,26 @@
     span{
         font-family: 'Libre Barcode 39 Text', cursive !important;
     }
-
+    
     </style>
     </head>
     <body>
         <div class="jumbotron text-center">
+            <h1>Welcome To </h1>
+            <br>
+            <span><h1>NewView</h1></span>
+            <h3>Write a article!</h3>
+            <p>Write an article about anything,{{ request.user.username }} Literally anything. </p>
+        </div>
+        <center>
+            <h2>From Your Subscriptions</h2>
+            {%for i in article%}
+            <h4><a href="/{{i.id}}">{{i}}</a></h4>
+            by:{{i.author}}<br>
             
-           <a style="color: white;text-decoration:none;" href="/"><br><span id="logo"><h1>NewView</h1></span></a>
-</div>
-
-<center><h2>{{name}}</h2>
-    {%if user.is_authenticated%}
-    <p>Follow @{{name}} <a href="authors/{{name}}/follow/">here</a></p>
-    {%else%}
-    <p>Login to Follow @{{name}}</p>
-    {%endif%}
-<h3>Articles Written by {{name}},</h3>
-{%for i in article%}
-<h4><a href="/{{i.id}}">{{i}}</a></h4>
-{%endfor%}
-</center>
-</body>
-</html>
+            {%endfor%}
+    
+        </center>
+            
+    </body>
+</htmL>

@@ -15,7 +15,8 @@ urlpatterns=[
     url(r'sign$',views.signup,name="add"),
     url(r'loginForm$',views.loginAction,name="login"),
     url(r'signout$',views.signout,name="asignout"),
-    url(r'authors/(?P<name>[\w-]+)/$',views.authour,name="author")
-    url(r'authors/(?P<name>[\w-]+)/follow/$',views.subs,name="author")
-    
+    url(r'authors/(?P<name>[\w-]+)/$',views.authour,name="author"),
+    url(r'authors/(?P<name>[\w-]+)/follow/$',views.subs,name="author_our"),
+    url(r'subcription',views.subscriptions,name="subscription"),
+    url(r'cmmnt',views.ReviewDetail,name="comment"),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

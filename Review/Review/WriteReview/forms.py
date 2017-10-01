@@ -16,3 +16,6 @@ class Add(forms.Form):
     Password=forms.CharField(widget = forms.PasswordInput(),initial="")
     
     Email=forms.EmailField(label="Email Id:",initial="")
+class Comment(forms.Form):
+    Comment=forms.CharField(label="Type your comment")    
+    

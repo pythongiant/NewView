@@ -77,10 +77,19 @@ def ReviewDetail(request,rev_id):
     for i in recommendation:
         if i == article:
            recommendation.remove(i) 
-            
-    context={"article":article,"recommendations":recommendation}
-    recommendation=[]
 
+    form=forms.Comment()            
+    
+    form=forms.Comment()
+    if request.method == 'POST':
+        form = forms.Authenticate(request.POST)
+        if form.is_valid():
+            comment = form.cleaned_data['Comment']
+            user=request.user.username
+            models.Comments.objects.create(comment=comment,user=user,article=str(article))
+    all_comments=models.Comments.objects.all().filter(article=article)            
+    context={"article":article,"recommendations":recommendation,"form":form,"comments":all_comments}
+    recommendation=[]
     return render(request,"WriteReview/MainPage.html",context)
     
 
@@ -144,5 +153,21 @@ def authour(request,name):
             articles.append(article)
     context={"article":articles,"name":name}
     return render(request,"WriteReview/author.html",context)
-def subs(request):
-    pass
+def subs(request,name):
+    print ("author name")
+    print(name )
+    models.Subscription.objects.create(User=request.user.username,Author=name,alive=True)
+    return redirect("/")
+def subscriptions(request):
+    name=request.user.username
+    all_model=models.Subscription.objects.all().filter(User=name)
+    arts=[]
+    for i in all_model:
+        authour=i.Author
+        all_articles=models.Reviews.objects.all()
+        for article in all_articles:
+            author_for_article=article.author
+            if author_for_article==authour:
+               arts.append(article)     
+    context={"article":arts}        
+    return render(request,"WriteReview/subscription.html",context)           

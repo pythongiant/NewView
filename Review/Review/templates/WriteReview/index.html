@@ -1,7 +1,9 @@
 <!doctype html>
 {% load crispy_forms_tags %}
 <html>
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <head><title>Write a new Article</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -19,38 +21,58 @@
     .jumbotron{
         background-color: #FF0033 !important;
         color:white;
-        height:60%
+        height:80%;
+    }
+    h1{
+        
     }
     span{
         font-family: 'Libre Barcode 39 Text', cursive !important;
+      
     }
     
+    .Article{
+        display: inline-block;
+        padding: 15px;
+        margin: 10px;
+        border: 1px solid black ; 
+        transition: all .2s ease-in-out;
+    }
+    .Article:hover{
+        transform: scale(1.1);
+    }
+
     </style>
     </head>
     <body>
         <div class="jumbotron text-center">
-            <h1>Welcome To </h1>
-            <br>
-            <span><h1>NewView</h1></span>
-            <h3>Write a article!</h3>
-            <p>Write an article about anything,{{ request.user.username }} Literally anything. </p>
+            <span style="font-size:1200%">NewView</span>
+            <h3>Write an article!</h3>
+            <p>Write an article about anything,{{ request.user.username }}. Literally anything. </p>
             {% if user.is_authenticated %}
             <p><a style="color:white" href="/art"><button type="button" class="btn btn-primary">Write an article</button></a>
                <a style="color:white" href={% url 'asignout' %}><button type="button" class="btn btn-warning">Sign Out</button></a>
+               <a style="color:white" href={% url 'subscription' %}><button type="button" class="btn btn-success">From your Subscriptions</button></a>
             </p>
             {% else %}
             <p><a href="/login" style="color:white"><button class="btn btn-primary">Login</button></a>&nbsp<a href="/signup" style="color:white"><button class="btn btn-warning">Sign Up</button></a></p>
             {% endif %}
         </div>
-        <center>
-            <h2>Start Today</h2>
-            
-                <h2>Read these New Articles</h2>
-                {% for i in article %}
-                    
-                    <strong><h4><a href="/{{i.id}}">{{i}}</a></h4></strong>
-                    <p>by:{{i.author}}</p>
-                {% endfor %}              
-        </center>
+        <div >
+                <center>
+                        <h2>Start Today</h2>
+                        
+                            <h2>New Articles</h2>
+                           
+                                        {% for i in article %}
+                                
+                                        <a href="/{{i.id}}"><div class="Article"><strong><h4>{{i}}</h4></strong><br><p>by:{{i.author}}</p></div></a>
+                                
+                            {% endfor %}              
+                        
+                    </center>
+
+        </div>
+        
     </body>
 </html>
