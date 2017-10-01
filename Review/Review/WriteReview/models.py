@@ -14,9 +14,15 @@ class Subscription(models.Model):
     alive= models.BooleanField(default=True)
     def __str__(self):
         return str(self.User) +" is subscribed to "+str(self.Author)
-class Comments(models.Model):
+class Comment(models.Model):
     comment=models.CharField(max_length=10000)
     user=models.CharField(max_length=5000)
     article=models.CharField(max_length=100000000)
     def __str__(self):
         return str(self.comment)    
+class Recommendation(models.Model):
+    user=models.CharField(max_length=5000)
+   
+    article=models.CharField(max_length=500000)    
+    def __str__(self):
+        return str(self.user)+"-"+str(self.article)

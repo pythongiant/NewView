@@ -6,19 +6,31 @@ from . import models
 from django.contrib.auth.models import User #Import the User module
 from django.contrib.auth import authenticate,login,logout#import some more stuff
 from django.db import IntegrityError
-
+from django.contrib.auth.decorators import login_required
+import os
 #from .models import 
 # Create your views here.
 """
 username:srihari
 password:pass1234
 """
+
 recommendation=[]
+prev_recommendations=[]
+
 def start(request):
     
     article=[i for i in models.Reviews.objects.all()]
     article.reverse()
-    context={"article":article}
+    prev_recommendation=list(set(prev_recommendations))
+    print(prev_recommendation)
+    for i in prev_recommendation:
+        models.Recommendation.objects.create(user=request.user.username,article=i)
+        for y in models.Recommendation.objects.all():
+            if models.Recommendation.objects.filter(article=i).count() >1:
+                y.delete()           
+    prev_recommendatioa=models.Recommendation.objects.all().filter(user=request.user.username)        
+    context={"article":article,"previous":prev_recommendatioa}
     return render(request,"WriteReview/index.html",context)
    
 def RevDone(request):
@@ -62,9 +74,9 @@ def recommend(pk):
         if sim>0:
             recommend=i+1
             recommendation.append(get_object_or_404(models.Reviews,pk=recommend))
-    
+            prev_recommendations.append(get_object_or_404(models.Reviews,pk=recommend))
     recommendation.reverse()
-
+    prev_recommendations.reverse()
 
 
 def ReviewDetail(request,rev_id):
@@ -86,8 +98,8 @@ def ReviewDetail(request,rev_id):
         if form.is_valid():
             comment = form.cleaned_data['Comment']
             user=request.user.username
-            models.Comments.objects.create(comment=comment,user=user,article=str(article))
-    all_comments=models.Comments.objects.all().filter(article=article)            
+            models.Comment.objects.create(comment=comment,user=user,article=str(article))
+    all_comments=models.Comment.objects.all().filter(article=article)            
     context={"article":article,"recommendations":recommendation,"form":form,"comments":all_comments}
     recommendation=[]
     return render(request,"WriteReview/MainPage.html",context)
@@ -133,12 +145,14 @@ def loginAction(request):
             username = form.cleaned_data['Username']
             password = form.cleaned_data['Password']
             user=authenticate(username=username,password=password)        
+       
+       
             if user is not None:
                 login(request,user)
                 return redirect('/')
             else:
                 error="Wrong Username or Password"
-                return render(request,"WriteReview/login.html",{"Login":form,"error":error})
+                return render(request,"WriteReview/index.html",{"Login":form,"error":error})
 
 def signout(request):
     logout(request)
@@ -158,6 +172,7 @@ def subs(request,name):
     print(name )
     models.Subscription.objects.create(User=request.user.username,Author=name,alive=True)
     return redirect("/")
+
 def subscriptions(request):
     name=request.user.username
     all_model=models.Subscription.objects.all().filter(User=name)
