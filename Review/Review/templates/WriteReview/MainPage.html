@@ -19,14 +19,16 @@
         #navbar{
             background-color: #FF0033;
             height:10%;
-            width:100%;
+            width:99%;
             padding:7px;
             font-family: 'Libre Barcode 39 Text', cursive !important;
             color: white;
            
-
         }
-        
+        img{
+            width:40%;
+            height:40%;
+        }
         a{
             text-decoration: none;
             color:white;
@@ -46,27 +48,34 @@
         <p style="margin-left: 10px;">{{article.Body}}</p>
         {% endautoescape %}
         {% csrf_token %}
-    <form class="form-horizontal" enctype="mltipart/form-data" method="POST" action={% url 'comment' %}>  
-        {% if user.is_authenticated %}
-        {{form}}<br>
-        {%else%}
-        <P>You need to login to comment</P>
-        {%endif%}
-        <br>
-        <button class="btn btn-primary" type="submit" value="submit">SUBMIT!</button>   
-    </form> 
-    {%for i in comments%}
-    {{i}}
-    {%endfor%}
-        
-        
-</center>
-<strong style=" margin-left: 10px;">Tags:</strong>{{article.Tag}}
+   
+    </center>
+    <br>
+    <br>
+    <strong style=" margin-left: 10px;">Tags:</strong>{{article.Tag}}
 
 <br>
 <strong style=" margin-left: 10px;">Recommended:</strong>
 {% for i in recommendations %}
 <a style="color:blue" href="/{{i.id}}">{{i}},</a>
+
 {% endfor %}
+
+<center>
+<form class="form-horizontal" enctype="mltipart/form-data" method="POST" >  
+    <br>
+    {% if user.is_authenticated %}
+    {% csrf_token %}
+    {{form}}<br>
+    {%else%}
+    <P>You need to login to comment</P>
+    {%endif%}
+    <br>
+    <button class="btn btn-primary" type="submit" value="submit">SUBMIT!</button>   
+</form> 
+{%for i in comments%}
+{{i.user}} : {{i}}<br>
+{%endfor%}
+</center>
 </body>
  </html>

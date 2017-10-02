@@ -81,6 +81,14 @@
                     <a href="/{{i.id}}"><div class="Article"><strong><h4>{{i.article}}</h4></strong></div></a>
                     {%endfor%}
                 </Center>        
+     <h4>&nbsp &nbsp Movies</h4>
+    <hr/>
+    <center>
+    {% for i in movie  %}
+    <a href="/{{i.id}}"><div class="Article"><strong><h4>{{i}}</h4></strong><br><p>by:{{i.author}}</p></div></a>
+    
+    {% endfor %} 
+</center>
         </div>
         
     </body>

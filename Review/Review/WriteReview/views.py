@@ -18,6 +18,18 @@ password:pass1234
 recommendation=[]
 prev_recommendations=[]
 
+
+def tags(pk,tag):
+    obj=get_object_or_404(models.Reviews,pk=pk)
+    tags=obj.Tag
+    art_tags=tags
+    art_tags_all=[]
+    string=art_tags.split(',')
+    for i in string:
+        if i == tag:
+            return True
+    
+
 def start(request):
     
     article=[i for i in models.Reviews.objects.all()]
@@ -29,8 +41,18 @@ def start(request):
         for y in models.Recommendation.objects.all():
             if models.Recommendation.objects.filter(article=i).count() >1:
                 y.delete()           
+    #for movie articles                
+    movie=[]
+    for i in models.Reviews.objects.all():
+        key = i.pk
+        if tags(key,"movie")==True or tags(key,"movies") == True:
+            
+            print(key)
+            movie.append(i)
+    print(movie)            
+
     prev_recommendatioa=models.Recommendation.objects.all().filter(user=request.user.username)        
-    context={"article":article,"previous":prev_recommendatioa}
+    context={"article":article,"previous":prev_recommendatioa,"movie":movie}
     return render(request,"WriteReview/index.html",context)
    
 def RevDone(request):
@@ -92,14 +114,14 @@ def ReviewDetail(request,rev_id):
 
     form=forms.Comment()            
     
-    form=forms.Comment()
+    
     if request.method == 'POST':
-        form = forms.Authenticate(request.POST)
+        form = forms.Comment(request.POST)
         if form.is_valid():
             comment = form.cleaned_data['Comment']
             user=request.user.username
-            models.Comment.objects.create(comment=comment,user=user,article=str(article))
-    all_comments=models.Comment.objects.all().filter(article=article)            
+            models.Comment.objects.create(comment=comment,user=user,article=article.Title)
+    all_comments=models.Comment.objects.all().filter(article=article.Title)            
     context={"article":article,"recommendations":recommendation,"form":form,"comments":all_comments}
     recommendation=[]
     return render(request,"WriteReview/MainPage.html",context)
