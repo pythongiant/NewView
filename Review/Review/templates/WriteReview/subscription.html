@@ -24,22 +24,34 @@
     span{
         font-family: 'Libre Barcode 39 Text', cursive !important;
     }
-    
+        
+    .Article{
+        display: inline-block;
+        padding: 15px;
+        margin: 10px;
+        border: 1px solid black ; 
+        transition: all .2s ease-in-out;
+        border-radius: 12px;
+    }
+    .Article:hover{
+        transform: scale(1.1);
+        background-color: red;
+        color:white;
+    }
     </style>
     </head>
     <body>
         <div class="jumbotron text-center">
             <h1>Welcome To </h1>
             <br>
-            <span><h1>NewView</h1></span>
+            <a href="#" style="color:white;text-decoration:none;"><span><h1>NewView</h1></span></a>
             <h3>Write a article!</h3>
             <p>Write an article about anything,{{ request.user.username }} Literally anything. </p>
         </div>
         <center>
             <h2>From Your Subscriptions</h2>
             {%for i in article%}
-            <h4><a href="/{{i.id}}">{{i}}</a></h4>
-            by:{{i.author}}<br>
+            <a href="/{{i.id}}"><div class="Article"><strong><h4>{{i}}</h4></strong></div></a>
             
             {%endfor%}
     

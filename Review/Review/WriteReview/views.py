@@ -1,5 +1,5 @@
 #!usr/bin/python3
-
+import datetime
 from django.shortcuts import render,redirect,get_object_or_404
 from . import forms
 from . import models
@@ -17,6 +17,10 @@ password:pass1234
 
 recommendation=[]
 prev_recommendations=[]
+prev_recommendationsb=[]
+def tops():
+    pass
+
 
 
 def tags(pk,tag):
@@ -32,7 +36,7 @@ def tags(pk,tag):
 
 def start(request):
     
-    article=[i for i in models.Reviews.objects.all()]
+    article=[i for i in models.Reviews.objects.all()][-9:]
     article.reverse()
     prev_recommendation=list(set(prev_recommendations))
     print(prev_recommendation)
@@ -52,7 +56,9 @@ def start(request):
     print(movie)            
 
     prev_recommendatioa=models.Recommendation.objects.all().filter(user=request.user.username)        
-    context={"article":article,"previous":prev_recommendatioa,"movie":movie}
+    prev_recommendationsb.append(str(prev_recommendatioa))
+    print("STUFF:"+str(prev_recommendations))
+    context={"article":article,"previous":prev_recommendatioa,"movie":movie,"Prev_len":len(prev_recommendations)}
     return render(request,"WriteReview/index.html",context)
    
 def RevDone(request):
@@ -64,7 +70,8 @@ def RevDone(request):
             Title=form.cleaned_data['Title']
             Review=form.cleaned_data['Review']
             Tags=form.cleaned_data['Tags']
-            models.Reviews.objects.create(Title=Title,Body=Review,Tag=Tags,author=request.user.username)
+            genre=form.cleaned_data['Genres']
+            models.Reviews.objects.create(Title=Title,Body=Review,Ta=Tags,author=request.user.username,views=0,published=datetime.datetime.now())
     return redirect("/")
 
 def simscore(tag,test):
@@ -113,15 +120,19 @@ def ReviewDetail(request,rev_id):
            recommendation.remove(i) 
 
     form=forms.Comment()            
-    
-    
+    article.views+=1  
+      
+    article.save()
     if request.method == 'POST':
         form = forms.Comment(request.POST)
         if form.is_valid():
             comment = form.cleaned_data['Comment']
             user=request.user.username
             models.Comment.objects.create(comment=comment,user=user,article=article.Title)
-    all_comments=models.Comment.objects.all().filter(article=article.Title)            
+    all_comments=models.Comment.objects.all().filter(article=article.Title)          
+    if len(recommendation)==0:
+        recommendation.append("No recommendations")
+    
     context={"article":article,"recommendations":recommendation,"form":form,"comments":all_comments}
     recommendation=[]
     return render(request,"WriteReview/MainPage.html",context)

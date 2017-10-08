@@ -67,21 +67,26 @@
                         <h2>New Articles:</h2>
                         <hr>
                            {% for i in article %}
-                                {%if i.pk < 10 %}
+                                
                                 
                                 <a href="/{{i.id}}"><div class="Article"><strong><h4>{{i}}</h4></strong><br><p>by:{{i.author}}</p></div></a>
                                 
-                                {%endif%}        
+                                
                            {% endfor %}              
                         
                     </center>
                 <Center>
+                    {%if user.is_authenticated%}
+                    {%if Prev_len > 0 %}
                     <h4>Your Previous recommendations:</h4>
+                    
                     {%for i in previous%}
                     <a href="/{{i.id}}"><div class="Article"><strong><h4>{{i.article}}</h4></strong></div></a>
                     {%endfor%}
+                    {%endif%}
+                    {%endif%}
                 </Center>        
-     <h4>&nbsp &nbsp Movies</h4>
+     <h4>&nbsp &nbsp Articles on Movies</h4>
     <hr/>
     <center>
     {% for i in movie  %}

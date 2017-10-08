@@ -9,7 +9,6 @@
         
          <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
          <script type="text/javascript">
-
             bkLib.onDomLoaded(function() {
                     
                     new nicEditor().panelInstance('id_Review');
@@ -39,36 +38,73 @@
         .new{
         font-family: 'Libre Barcode 39 Text', cursive !important;
     }
-    textarea{
-        width:40%;
-        height:500px;
-    }
-        </style>
-        </head>
-        <body>
-            <div class="jumbotron text-center">
-                <h1>Welcome To </h1>
-                <a href="/" style="color:white"><span class="new"><h1>NewView</h1></span></a>
-                <h3>Write an article!</h3>
-                <p>Write an article about anything. Literally, anything. </p>
-                
-            </div>
-    
-        <form class="form-horizontal" enctype="mltipart/form-data" method="POST" action={% url 'RevForm' %} >
-        <center>
-                {% if user.is_authenticated %}
-            {% csrf_token %}
-                <span>{{form|crispy}}</span>
-            {{form.errors}}
-            <button class="btn btn-primary" type="submit" value="submit">SUBMIT!</button>
-
-            {% else %}
-            <p>You need to Login or Sign Up to write an article</p>
-            {% endif %}
+</style>
+            <title>
+                Write an article
+            </title>
             
+             <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+             <script type="text/javascript">
+                bkLib.onDomLoaded(function() {
+                        
+                        new nicEditor().panelInstance('id_Review');
+                  });
+     
+              </script>
+            
+    
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+           
+            <style>
+                @import url('https://fonts.googleapis.com/css?family=Anton|Lobster|Raleway|Libre+Barcode+39+Text');
+                body,html{
+                    width:100%;
+                    height:100%;
+                }
+            .jumbotron{
+                background-color: #FF0033 !important;
+                color:white;
+                height:50%;   
+        
+            }
+            .new{
+            font-family: 'Libre Barcode 39 Text', cursive !important;
+        }
+        textarea{
+            width:40%;
+            height:500px;
+        }
+            </style>
+            </head>
+            <body>
+                <div class="jumbotron text-center">
+                    <h1>Welcome To </h1>
+                    <a href="/" style="color:white"><span class="new"><h1>NewView</h1></span></a>
+                    <h3>Write an article!</h3>
+                    <p>Write an article about anything. Literally, anything. </p>
+                    
+                </div>
+        
+            <form class="form-horizontal" enctype="mltipart/form-data" method="POST" action={% url 'RevForm' %} >
+            <center>
+                    {% if user.is_authenticated %}
+                {% csrf_token %}
+                    <span>{{form|crispy}}</span>
+                {{form.errors}}
                 <br>
-
-            </center>
-        </form>
-    </body>
-</html>
+                <button class="btn btn-primary" type="submit" value="submit">SUBMIT!</button>
+    
+                {% else %}
+                <p>You need to Login or Sign Up to write an article</p>
+                {% endif %}
+                
+                    <br>
+    
+                </center>
+            </form>
+        </body>
+    </html>
