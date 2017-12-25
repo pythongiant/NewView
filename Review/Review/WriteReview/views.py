@@ -49,7 +49,7 @@ def start(request):
     movie=[]
     for i in models.Reviews.objects.all():
         key = i.pk
-        if tags(key,"movie")==True or tags(key,"movies") == True:
+        if tags(key,"movie")==True or tags(key,"movies") == True or i.genre == "Movies":
             
             print(key)
             movie.append(i)

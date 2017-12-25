@@ -22,7 +22,7 @@
             height:10%;
             width:99%;
             padding:7px;
-            font-family: 'Libre Barcode 39 Text', cursive !important;
+
             color: white;
            
         }
@@ -52,11 +52,42 @@
             width:60%;
             height:40%;
         }
+        #navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding-left:10% ;
+            overflow: hidden;
+
+            position: fixed;
+            width:100%;
+            font-size: 110%;
+            transition: all .2s ease-in-out;
+            
+        }
+        
+        #navbar li {
+            float: left;
+        }
+        
+        #navbar li a {
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+        }
+        
         </style>
     </head>
 <body>
 <div id="navbar">
-<a href="/"><h1>NewView</h1></a>
+<ul>
+    <li><a href="/"><h3>NewView</h3></a></li>
+    <li><a  href="/">Movies</a></li>
+    <li><a  href="/">Tech</a></li>
+    <li><a  href="/">Gaming</a></li>
+</ul>
+    
 </div>   
 <center>
         <h2 id="title">{{article.Title}}</h2>

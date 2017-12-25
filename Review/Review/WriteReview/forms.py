@@ -1,4 +1,4 @@
-from django.forms import forms,extras
+from django.forms import forms
 from django import forms
 
 GENRES=(
