@@ -10,10 +10,7 @@ from django.contrib.auth.decorators import login_required
 import os
 #from .models import 
 # Create your views here.
-"""
-username:srihari
-password:pass1234
-"""
+
 
 recommendation=[]
 prev_recommendations=[]
